@@ -1,20 +1,25 @@
 import globals from "globals";
 import stylisticJs from "@stylistic/eslint-plugin-js";
 import js from "@eslint/js";
+import react from "eslint-plugin-react";
+import jest from "eslint-plugin-jest";
 
 export default [
   js.configs.recommended,
   {
-    files: ["**/*.js"],
     languageOptions: {
-      sourceType: "commonjs",
-      globals: {
-        ...globals.node,
-      },
+      sourceType: "module", // Ensure ESLint understands ES module syntax
       ecmaVersion: "latest",
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...globals.jest,
+      },
     },
     plugins: {
       "@stylistic/js": stylisticJs,
+      react,
+      jest,
     },
     rules: {
       "@stylistic/js/indent": ["error", 2],
@@ -29,6 +34,6 @@ export default [
     },
   },
   {
-    ignores: ["dist/**", "build/**"],
+    ignores: ["dist/**", "build/**", "eslint.config.mjs"], // Ignore your config file
   },
 ];
