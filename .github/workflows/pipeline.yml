@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
   pull_request:
     branches: [main]
     types: [opened, synchronize]
@@ -31,10 +30,17 @@ jobs:
       - name: Build application
         run: npm run build
 
+      - name: Set MONGODB_URI
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: echo "MONGODB_URI is set for the pipeline"
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: npx playwright test
 
       - name: Upload test report
