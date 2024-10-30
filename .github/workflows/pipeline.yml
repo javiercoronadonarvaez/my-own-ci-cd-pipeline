@@ -30,17 +30,13 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Set MONGODB_URI
-        env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-        run: echo "MONGODB_URI is set for the pipeline"
+      - name: Set up MongoDB URI
+        run: echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> $GITHUB_ENV
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
         run: npx playwright test
 
       - name: Upload test report
