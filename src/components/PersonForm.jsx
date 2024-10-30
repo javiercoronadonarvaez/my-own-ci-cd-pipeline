@@ -10,7 +10,7 @@ const PersonForm = ({
       <div>
         name:
         <input
-          data-testid="nameTest"
+          data-testid="name"
           type="text"
           name="Name"
           value={newName}
@@ -20,7 +20,7 @@ const PersonForm = ({
       <div>
         number:
         <input
-          data-testid="numberTest"
+          data-testid="number"
           type="text"
           name="Number"
           value={newNumber}
