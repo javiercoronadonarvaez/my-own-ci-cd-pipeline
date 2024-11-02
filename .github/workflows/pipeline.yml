@@ -15,11 +15,15 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     env:
       MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      PORT: ${{ secrets.PORT }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+      - name: Check MongoDB URI
+        run: |
+          echo "MONGODB_URI starts with: ${MONGODB_URI:0:15}...${MONGODB_URI: -15}"
       - name: Install dependencies
         run: npm install
       - name: Check style
