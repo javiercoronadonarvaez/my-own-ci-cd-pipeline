@@ -7,9 +7,22 @@ console.log('URL', url)
 mongoose.set('strictQuery', false)
 
 mongoose
-  .connect(url)
-  .then(() => console.log('Correctly connected'))
-  .catch((error) => `Failed to connect with error ${error.message}`)
+  .connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 10000,
+  })
+  .then(() => console.log('Successfully connected to MongoDB'))
+  .catch((error) => console.error(`Connection error: ${error}`))
+
+mongoose.connection.on('connecting', () =>
+  console.log('Connecting to MongoDB...')
+)
+mongoose.connection.on('connected', () => console.log('MongoDB connected!'))
+mongoose.connection.on('error', (err) => console.error('MongoDB error:', err))
+mongoose.connection.on('disconnected', () =>
+  console.log('MongoDB disconnected')
+)
 
 const userSchema = mongoose.Schema({
   name: {
