@@ -52,7 +52,28 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
-      - name: Bump version and push tag
+
+      # Bump version to major if a commit message includes '#MAJOR'
+      - name: Bump major version and push tag
+        if: ${{ contains(join(github.event.commits.*.message), '#MAJOR') }}
+        uses: anothrNick/github-tag-action@1.71.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: major
+
+      # Bump version to minor if a commit message includes '#MINOR' and no #MAJOR commit is found
+      - name: Bump minor version and push tag
+        if: ${{ contains(join(github.event.commits.*.message), '#MINOR') }}
+        uses: anothrNick/github-tag-action@1.71.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: minor
+
+      # Default to patch if neither #MAJOR nor #MINOR are present
+      - name: Bump patch version and push tag
+        if: ${{ !contains(join(github.event.commits.*.message), '#MAJOR') && !contains(join(github.event.commits.*.message), '#MINOR') }}
         uses: anothrNick/github-tag-action@1.71.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
