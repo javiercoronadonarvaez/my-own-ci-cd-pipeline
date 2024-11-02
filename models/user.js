@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 
 const url = process.env.MONGODB_URI
 
+console.log('URL', url)
+
 mongoose.set('strictQuery', false)
 
 mongoose
