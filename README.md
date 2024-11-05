@@ -1,5 +1,3 @@
 # Links for Online Application
 
-## https://fullstack-open-part3-jcn-backend.fly.dev
-
-## https://fullstack-open-part3-jcn-backend.fly.dev/api/persons
+## https://my-own-ci-cd-pipeline.fly.dev/
